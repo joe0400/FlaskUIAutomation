@@ -8,6 +8,8 @@ application = Flask(__name__)
 
 main_page_file = os.path.join(os.path.join(os.getcwd(),"pages"),"index.html")
 
+
+
 @application.route("/")
 def load_page():
     with open(main_page_file,"r") as file:
@@ -33,11 +35,36 @@ def settings():
             return modifysettings()
 
 def getsettings():
-
-    pass
+    with open(os.path.join(os.path.join(os.getcwd(),"settings"),"settings.json"),"r") as file:
+        return application.response_class(
+            response="".join(file.readlines()),
+            status=200,
+            mimetype="application/json"
+        )
+OpenAIConnector = None
+Errors = None
+try:
+    OpenAIConnector = openai.OpenAI(
+        api_key=getsettings().response["key"],
+        base_url=getsettings().response["base_url"]
+    )
+except Exception as e:
+    Errors = e
 
 def modifysettings():
+    # now that we know the settings exist we can trigger the changes fromt he request object. we wont be
+    # doing any check here for validity, as i will assume the request is not malformed.
+
     pass
+
+
+def reload_open_ai_connector():
+    # get the settings file
+    file = getsettings().response
+
+
+
+
 
 
 @application.route("/listeners")
