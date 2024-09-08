@@ -5,7 +5,7 @@ sudo apt-get install git git-lfs
 sudo apt-get install portaudio19-dev
 mkdir models
 cd models
-git lfs clone https://huggingface.co/huggyllama/llama-7b
+git lfs clone https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-GGUF
 
 cd ..
 mkdir llama_cpp
